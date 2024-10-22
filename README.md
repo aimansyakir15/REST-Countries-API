@@ -1,70 +1,31 @@
-# Getting Started with Create React App
+# REST Countries API with Color Theme Switcher
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
+A responsive web application built with React that fetches and displays data from the REST Countries API. The app allows users to search for countries, filter by region, view detailed information about each country, and navigate to neighboring countries. It also features a light/dark mode theme toggle for enhanced user experience across different devices.
 
-## Available Scripts
+## Features
+- Country List: Displays all countries fetched from the API on the homepage.
+- Search: Allows users to search for countries by name.
+- Region Filter: Users can filter countries by their region.
+- Country Detail Page: Shows detailed information about a selected country, including border countries.
+- Light/Dark Mode: Toggle between light and dark themes for improved user experience across devices.
 
-In the project directory, you can run:
+## Links
+Live Site URL: 
 
-### `npm start`
+## Screenshot
+![image](https://github.com/user-attachments/assets/155f2e9a-212f-4985-afb7-112047cdcf55)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![image](https://github.com/user-attachments/assets/b080d6ce-60e1-4739-9890-7f24ac0b6e83)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![image](https://github.com/user-attachments/assets/36b5e37a-5403-4ec3-b8c1-d32bdcf3a9fb)
 
-### `npm test`
+![image](https://github.com/user-attachments/assets/ac28079a-614c-4870-b1c9-94418c2853b1)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## My Process
+### Built with:
+- HTML
+- CSS
+- JavaScript
+- React
+- Tailwind CSS

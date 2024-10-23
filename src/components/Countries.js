@@ -41,45 +41,46 @@ export default function Countries() {
   }, []);
 
   useEffect(() => {
+    const fetchAllCountries = async () => {
+      try {
+        const res = await fetch("https://restcountries.com/v3.1/all");
+        const data = await res.json();
+        const filteredCountries = data.filter(
+          (country) => country.name.common !== "Israel"
+        );
+        const sortedCountries = filteredCountries.sort((a, b) =>
+          a.name.common.localeCompare(b.name.common)
+        );
+        setCountries(sortedCountries.slice(0, 250));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const searchCountry = async () => {
+      try {
+        const res = await fetch(`
+        https://restcountries.com/v3.1/name/${searchText}
+      `);
+        const data = await res.json();
+        const filteredCountries = data.filter(
+          (country) => country.name.common !== "Israel"
+        );
+        const sortedCountries = filteredCountries.sort((a, b) =>
+          a.name.common.localeCompare(b.name.common)
+        );
+        setCountries(sortedCountries);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     if (searchText.trim() === "") {
-      const fetchAllCountries = async () => {
-        try {
-          const res = await fetch("https://restcountries.com/v3.1/all");
-          const data = await res.json();
-          const filteredCountries = data.filter(
-            (country) => country.name.common !== "Israel"
-          );
-          const sortedCountries = filteredCountries.sort((a, b) =>
-            a.name.common.localeCompare(b.name.common)
-          );
-          setCountries(sortedCountries.slice(0, 250));
-        } catch (error) {
-          console.error(error);
-        }
-      };
       fetchAllCountries();
     } else {
       searchCountry();
     }
   }, [searchText]);
-
-  async function searchCountry() {
-    try {
-      const res = await fetch(`
-        https://restcountries.com/v3.1/name/${searchText}
-      `);
-      const data = await res.json();
-      const filteredCountries = data.filter(
-        (country) => country.name.common !== "Israel"
-      );
-      const sortedCountries = filteredCountries.sort((a, b) =>
-        a.name.common.localeCompare(b.name.common)
-      );
-      setCountries(sortedCountries);
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   async function filterByRegion(region) {
     try {

@@ -5,12 +5,12 @@ import {
   faMagnifyingGlass,
   faSun,
   faMoon,
-} from "@fortawesome/free-solid-svg-icons"; // Import faSun and faMoon
+} from "@fortawesome/free-solid-svg-icons";
 
-export default function Countries() {
+export default function Countries({ isDarkMode, toggleDarkMode }) {
   const [countries, setCountries] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [error, setError] = useState(null);
   const regions = [
     { name: "All" },
     { name: "Africa" },
@@ -21,9 +21,15 @@ export default function Countries() {
   ];
 
   useEffect(() => {
-    const getCountries = async () => {
+    const fetchCountries = async () => {
       try {
-        const res = await fetch("https://restcountries.com/v3.1/all");
+        const url = searchText.trim()
+          ? `https://restcountries.com/v3.1/name/${searchText}`
+          : "https://restcountries.com/v3.1/all";
+        const res = await fetch(url);
+        if (!res.ok) {
+          throw new Error("Failed to fetch data.");
+        }
         const data = await res.json();
         const filteredCountries = data.filter(
           (country) => country.name.common !== "Israel"
@@ -33,53 +39,11 @@ export default function Countries() {
         );
         setCountries(sortedCountries.slice(0, 250));
       } catch (error) {
-        console.error(error);
+        setError(error.message);
       }
     };
 
-    getCountries();
-  }, []);
-
-  useEffect(() => {
-    const fetchAllCountries = async () => {
-      try {
-        const res = await fetch("https://restcountries.com/v3.1/all");
-        const data = await res.json();
-        const filteredCountries = data.filter(
-          (country) => country.name.common !== "Israel"
-        );
-        const sortedCountries = filteredCountries.sort((a, b) =>
-          a.name.common.localeCompare(b.name.common)
-        );
-        setCountries(sortedCountries.slice(0, 250));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    const searchCountry = async () => {
-      try {
-        const res = await fetch(`
-        https://restcountries.com/v3.1/name/${searchText}
-      `);
-        const data = await res.json();
-        const filteredCountries = data.filter(
-          (country) => country.name.common !== "Israel"
-        );
-        const sortedCountries = filteredCountries.sort((a, b) =>
-          a.name.common.localeCompare(b.name.common)
-        );
-        setCountries(sortedCountries);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    if (searchText.trim() === "") {
-      fetchAllCountries();
-    } else {
-      searchCountry();
-    }
+    fetchCountries();
   }, [searchText]);
 
   async function filterByRegion(region) {
@@ -87,8 +51,7 @@ export default function Countries() {
       const res = await fetch(
         region === "All"
           ? "https://restcountries.com/v3.1/all"
-          : `https://restcountries.com/v3.1/region/${region}
-      `
+          : `https://restcountries.com/v3.1/region/${region}`
       );
       const data = await res.json();
       const filteredCountries = data.filter(
@@ -103,14 +66,11 @@ export default function Countries() {
     }
   }
 
-  const toggleDarkMode = () => {
-    setIsDarkMode((prevMode) => !prevMode);
-    document.body.classList.toggle("dark", !isDarkMode);
-  };
-
   return (
     <>
-      {!countries.length ? (
+      {error ? (
+        <h1 className="text-red-500 text-center text-2xl font-bold">{error}</h1>
+      ) : !countries.length ? (
         <h1 className="text-gray-900 font-bold uppercase tracking-wide flex items-center justify-center text-center h-screen text-4xl">
           Loading...
         </h1>
@@ -144,14 +104,18 @@ export default function Countries() {
           </header>
 
           {/* Search Bar and Region Filter aligned */}
-          <div className=" container mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+          <div className="container mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
             {/* Search Bar */}
             <form
               onSubmit={(e) => e.preventDefault()}
               autoComplete="off"
               className="relative w-full md:w-1/4"
             >
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white-400">
+              <span
+                className={`absolute left-3 top-1/2 transform -translate-y-1/2 transition-colors duration-300 ${
+                  isDarkMode ? "text-white" : "text-gray-400"
+                }`}
+              >
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
               </span>
               <input

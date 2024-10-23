@@ -3,16 +3,17 @@ import { useParams, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 
-export default function SingleCountry() {
+export default function SingleCountry({ isDarkMode, toggleDarkMode }) {
   const [country, setCountry] = useState([]);
   const [borderCountries, setBorderCountries] = useState([]);
   const { name } = useParams();
   const decodedName = decodeURIComponent(name);
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const getSingleCountry = async (countryName) => {
     setLoading(true);
+    setError(false);
     try {
       const res = await fetch(
         `https://restcountries.com/v3.1/name/${countryName}`
@@ -33,9 +34,12 @@ export default function SingleCountry() {
         } else {
           setBorderCountries([]);
         }
+      } else {
+        setError(true);
       }
     } catch (error) {
       console.error(error);
+      setError(true);
     } finally {
       setLoading(false);
     }
@@ -44,21 +48,6 @@ export default function SingleCountry() {
   useEffect(() => {
     getSingleCountry(decodedName);
   }, [decodedName]);
-
-  useEffect(() => {
-    const savedMode = localStorage.getItem("darkMode") === "true";
-    setIsDarkMode(savedMode);
-    if (savedMode) document.body.classList.add("dark");
-  }, []);
-
-  const toggleDarkMode = () => {
-    setIsDarkMode((prevMode) => {
-      const newMode = !prevMode;
-      localStorage.setItem("darkMode", newMode);
-      document.body.classList.toggle("dark", newMode);
-      return newMode;
-    });
-  };
 
   return (
     <>
@@ -107,6 +96,8 @@ export default function SingleCountry() {
       <section className="flex flex-col md:flex-row justify-between items-start gap-8 max-w-7xl p-4 mx-auto">
         {loading ? (
           <p>Loading...</p>
+        ) : error ? (
+          <p>Failed to load country data. Please try again.</p>
         ) : country.length > 0 ? (
           country.map((item) => {
             const nativeName = item.name?.nativeName

@@ -24,7 +24,7 @@ export default function Countries({ isDarkMode, toggleDarkMode }) {
     const fetchCountries = async () => {
       try {
         const url = searchText.trim()
-          ? `https://restcountries.com/v3.1/name/${searchText}?fullText=true`
+          ? `https://restcountries.com/v3.1/name/${searchText}`
           : "https://restcountries.com/v3.1/all";
         const res = await fetch(url);
         if (!res.ok) {

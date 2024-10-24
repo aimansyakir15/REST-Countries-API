@@ -16,7 +16,7 @@ export default function SingleCountry({ isDarkMode, toggleDarkMode }) {
     setError(false);
     try {
       const res = await fetch(
-        `https://restcountries.com/v3.1/name/${countryName}`
+        `https://restcountries.com/v3.1/name/${countryName}?fullText=true`
       );
       const data = await res.json();
 

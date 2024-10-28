@@ -6,11 +6,13 @@ import {
   faSun,
   faMoon,
 } from "@fortawesome/free-solid-svg-icons";
+import Footer from "./Footer";
 
 export default function Countries({ isDarkMode, toggleDarkMode }) {
   const [countries, setCountries] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const regions = [
     { name: "All" },
     { name: "Africa" },
@@ -22,6 +24,7 @@ export default function Countries({ isDarkMode, toggleDarkMode }) {
 
   useEffect(() => {
     const fetchCountries = async () => {
+      setLoading(true);
       try {
         const url = searchText.trim()
           ? `https://restcountries.com/v3.1/name/${searchText}`
@@ -40,6 +43,8 @@ export default function Countries({ isDarkMode, toggleDarkMode }) {
         setCountries(sortedCountries.slice(0, 250));
       } catch (error) {
         setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -70,9 +75,8 @@ export default function Countries({ isDarkMode, toggleDarkMode }) {
     <>
       {error ? (
         <h1>{error}</h1>
-      ) : !countries.length ? (
+      ) : loading ? ( // Check if loading !countries.length ? (
         <div className="flex items-center justify-center min-h-screen">
-          {" "}
           {/* Use min-h-screen to take full height */}
           <div role="status">
             <svg
@@ -189,6 +193,8 @@ export default function Countries({ isDarkMode, toggleDarkMode }) {
               />
             ))}
           </div>
+
+          <Footer isDarkMode={isDarkMode} />
         </section>
       )}
     </>

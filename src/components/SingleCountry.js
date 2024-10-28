@@ -422,6 +422,14 @@ export default function SingleCountry({ isDarkMode, toggleDarkMode }) {
           <p>Failed to load country data. Please try again.</p>
         )}
       </section>
+      <footer
+        className={`p-5 mt-44 text-center transition-background-color duration-1000 ${
+          isDarkMode ? "bg-gray-800 text-white" : "bg-white text-gray-700"
+        }`}
+        style={{ boxShadow: "0 -2px 8px rgba(99,99,99,.2)" }}
+      >
+        <p>2024 © Aiman Syakir.</p>
+      </footer>
     </>
   );
 }

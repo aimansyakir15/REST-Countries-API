@@ -9,7 +9,7 @@ export default function Footer({ isDarkMode }) {
           : "bg-white text-gray-800 border-gray-300"
       }`}
     >
-      <p>2024 © Aiman Syakir.</p>
+      {new Date().getFullYear()} © Aiman Syakir.
     </footer>
   );
 }
